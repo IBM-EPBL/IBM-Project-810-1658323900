@@ -116,3 +116,12 @@ let menu, animate;
   // Auto update menu collapsed/expanded based on the themeConfig
   window.Helpers.setCollapsed(true, false);
 })();
+
+function checkPasswords() {
+  var pass = document.getElementById("password").value;
+  var conf = document.getElementById("confirm-password").value;
+  if(pass !== conf){
+    document.getElementById("confirm-password").classList.add("is-invalid")
+    return false;
+  }
+}
