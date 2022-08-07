@@ -26,7 +26,6 @@ def user_login():
     return render_template("login.html", user='user', title='User Login', page="auth")
 
 
-
 @app.route('/accounts/user/register/', methods=['GET', 'POST'])
 def register_user():
     if (request.method == 'POST'):
@@ -41,7 +40,6 @@ def register_user():
         return "success"
 
     return render_template("register.html", user='user', title='Register User', page="auth")
-
 
 
 @app.route('/accounts/agent/login/', methods=['GET', 'POST'])
@@ -79,7 +77,6 @@ def admin_login():
         return response
 
     return render_template("login.html", user='admin', title='Admin Login', page="auth")
-
 
 
 if __name__ == '__main__':
