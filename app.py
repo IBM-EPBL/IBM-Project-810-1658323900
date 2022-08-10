@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, make_response
 
-from db import create_user, authentication
+from db import create_user, authentication, is_authenticated
 
 app = Flask(__name__)
 
@@ -9,9 +9,12 @@ def not_found(e):
     return render_template('404.html', title='Error - 404 Page Not Found', page="misc")
 
 
-
 @app.route('/accounts/user/login/', methods=['GET', 'POST'])
 def user_login():
+    cookies = request.cookies.get('key')
+    if(cookies):
+        if (is_authenticated(cookies, 'user')):
+            return redirect('/user/dashboard')
     if(request.method == 'POST'):
         email = request.form.get('email')
         password = request.form.get('password')
@@ -42,8 +45,22 @@ def register_user():
     return render_template("register.html", user='user', title='Register User', page="auth")
 
 
+@app.route('/user/dashboard/')
+def user_dashboard():
+    cookies = request.cookies.get('key')
+    if(not cookies):
+        return redirect('/accounts/user/login/')
+    if(not is_authenticated(cookies, 'user')):
+        return redirect('/accounts/user/login/')
+    return "Dashboard"
+
+
 @app.route('/accounts/agent/login/', methods=['GET', 'POST'])
 def staff_login():
+    cookies = request.cookies.get('key')
+    if (cookies):
+        if (is_authenticated(cookies, 'agent')):
+            return 'Login Successful'
     if (request.method == 'POST'):
         email = request.form.get('email')
         password = request.form.get('password')
@@ -52,7 +69,6 @@ def staff_login():
             values = {"email": email, "password": password}
             return render_template("login.html", user='agent', title='Agent Login', page="auth", values=values,
                                    error="Incorrect login credentials")
-        # request.cookies.add('key', secret_key)
         response = make_response(redirect('/accounts/agent/login/'))
         response.set_cookie('key', secret_key)
         return response
@@ -63,6 +79,10 @@ def staff_login():
 
 @app.route('/accounts/admin/login/', methods=['GET', 'POST'])
 def admin_login():
+    cookies = request.cookies.get('key')
+    if (cookies):
+        if(is_authenticated(cookies, 'admin')):
+            return 'Login Successful'
     if (request.method == 'POST'):
         email = request.form.get('email')
         password = request.form.get('password')
@@ -71,12 +91,17 @@ def admin_login():
             values = {"email": email, "password": password}
             return render_template("login.html", user='admin', title='Admin Login', page="auth", values=values,
                                    error="Incorrect login credentials")
-        # request.cookies.add('key', secret_key)
         response = make_response(redirect('/accounts/admin/login/'))
         response.set_cookie('key', secret_key)
         return response
 
     return render_template("login.html", user='admin', title='Admin Login', page="auth")
+
+@app.route('/accounts/logout/')
+def logout():
+    response = make_response(redirect('/accounts/user/login/'))
+    response.set_cookie('key', '', expires=0)
+    return response
 
 
 if __name__ == '__main__':
