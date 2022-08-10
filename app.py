@@ -14,7 +14,7 @@ def user_login():
     cookies = request.cookies.get('key')
     if(cookies):
         if (is_authenticated(cookies, 'user')):
-            return redirect('/user/dashboard')
+            return redirect('/user/dashboard/')
     if(request.method == 'POST'):
         email = request.form.get('email')
         password = request.form.get('password')
@@ -60,7 +60,7 @@ def staff_login():
     cookies = request.cookies.get('key')
     if (cookies):
         if (is_authenticated(cookies, 'agent')):
-            return 'Login Successful'
+            return redirect('/agent/dashboard/')
     if (request.method == 'POST'):
         email = request.form.get('email')
         password = request.form.get('password')
@@ -76,13 +76,22 @@ def staff_login():
     return render_template("login.html", user='user', title='Agent Login', page="auth")
 
 
+@app.route('/agent/dashboard/')
+def user_dashboard():
+    cookies = request.cookies.get('key')
+    if(not cookies):
+        return redirect('/accounts/agent/login/')
+    if(not is_authenticated(cookies, 'user')):
+        return redirect('/accounts/agent/login/')
+    return "Dashboard"
+
 
 @app.route('/accounts/admin/login/', methods=['GET', 'POST'])
 def admin_login():
     cookies = request.cookies.get('key')
     if (cookies):
         if(is_authenticated(cookies, 'admin')):
-            return 'Login Successful'
+            return redirect('/admin/dashboard/')
     if (request.method == 'POST'):
         email = request.form.get('email')
         password = request.form.get('password')
@@ -96,6 +105,16 @@ def admin_login():
         return response
 
     return render_template("login.html", user='admin', title='Admin Login', page="auth")
+
+
+@app.route('/admin/dashboard/')
+def user_dashboard():
+    cookies = request.cookies.get('key')
+    if(not cookies):
+        return redirect('/accounts/admin/login/')
+    if(not is_authenticated(cookies, 'user')):
+        return redirect('/accounts/admin/login/')
+    return "Dashboard"
 
 @app.route('/accounts/logout/')
 def logout():
