@@ -77,7 +77,7 @@ def staff_login():
 
 
 @app.route('/agent/dashboard/')
-def user_dashboard():
+def agent_dashboard():
     cookies = request.cookies.get('key')
     if(not cookies):
         return redirect('/accounts/agent/login/')
@@ -108,7 +108,7 @@ def admin_login():
 
 
 @app.route('/admin/dashboard/')
-def user_dashboard():
+def admin_dashboard():
     cookies = request.cookies.get('key')
     if(not cookies):
         return redirect('/accounts/admin/login/')
