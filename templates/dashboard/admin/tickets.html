@@ -1,0 +1,46 @@
+{% extends "dashboard/admin/base.html" %}
+
+{% block content %}
+
+    <h4 class="col mb-5">Tickets</h4>
+
+    {% if success %}
+    <div class="alert alert-primary alert-dismissible" role="alert">
+        {{ success }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    {% if tickets %}
+    <div class="card">
+
+        <div class="table-responsive text-nowrap">
+          <table id="tickets" class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Issue</th>
+                <th>Created On</th>
+                <th>View</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-1">
+                {% for ticket in tickets.values() %}
+                    <tr>
+                        <td>{{ ticket['description'] }}</td>
+                        <td>{{ ticket['issue'] }}</td>
+                        <td>{{ ticket['created'] }}</td>
+                        <td>
+                            <a href="/admin/ticket/{{ ticket['id'] }}"><button type="button" class="btn btn-outline-info btn-sm">View</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+    {% else %}
+        <p class="text-center my-lg-5">No Tickets</p>
+    {% endif %}
+
+{% endblock %}
