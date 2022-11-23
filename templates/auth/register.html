@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'auth/base.html' %}
 
 {% block body %}
     <div class="container-xxl">
@@ -65,11 +65,11 @@
                                         </g>
                                         </svg>
                                     </span>
-                                <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+                                <span class="app-brand-text demo text-body fw-bolder">{{ user }} Registration</span>
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-2">Adventure starts here 🚀</h4>
+                        <h4 class="mb-2">Customer Care Registry 🚀</h4>
                         <p class="mb-4">Create and Manage Your Tickets Easily!</p>
 
                         <form id="formAuthentication" class="mb-3" action="" onsubmit="return checkPasswords()" method="POST">
@@ -80,19 +80,18 @@
                                         <p style="color: red" class="form-label">*Email Already Exists.</p>
                                     {% endif %}
                                 </div>
-                                <input type="text" class="form-control {% if emailExists %}is-invalid{% endif %}" id="email" name="email" placeholder="Enter your email" {% if values %}value="{{ values["email"] }} {% endif %}" autofocus/>
+                                <input type="email" class="form-control {% if emailExists %}is-invalid{% endif %}" id="email" name="email" placeholder="Enter your email" {% if values %} value="{{ values["email"] }}" {% endif %} autofocus required/>
                             </div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between">
                                     <label for="username" class="form-label">Name</label>
-{#                                  <p style="color: red" class="form-label">*Username Exists Already.</p>#}
                                 </div>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name" {% if values %}value="{{ values["name"] }} {% endif %}"/>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name" {% if values %} value="{{ values["name"] }}" {% endif %} required/>
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
-                                <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" {% if values %} value="{{ values["password"] }} {% endif %}"/>
+                                <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" {% if values %} value="{{ values["password"] }}" {% endif %} required/>
                                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
                             </div>
@@ -100,26 +99,26 @@
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Confirm Password</label>
                                 <div class="input-group input-group-merge">
-                                <input type="password" id="confirm-password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" {% if values %} value="{{ values["password"] }} {% endif %}"/>
+                                <input type="password" id="confirm-password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" {% if values %} value="{{ values["password"] }}" {% endif %}/>
                                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
-                                    <label class="form-check-label" for="terms-conditions">
-                                        I agree to
-                                        <a href="javascript:void(0);">privacy policy & terms</a>
-                                    </label>
-                                </div>
-                            </div>
+{#                            <div class="mb-3">#}
+{#                                <div class="form-check">#}
+{#                                    <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />#}
+{#                                    <label class="form-check-label" for="terms-conditions">#}
+{#                                        I agree to#}
+{#                                        <a href="javascript:void(0);">privacy policy & terms</a>#}
+{#                                    </label>#}
+{#                                </div>#}
+{#                            </div>#}
                             <button class="btn btn-primary d-grid w-100">Sign up</button>
                         </form>
 {#                        <button class="btn btn-primary d-grid w-100" onclick="checkPasswords()">Sign up</button>#}
                         <p class="text-center">
                             <span>Already have an account?</span>
-                            <a href="/accounts/user/login">
+                            <a href="/accounts/{{ user }}/login">
                                 <span>Sign in instead</span>
                             </a>
                         </p>

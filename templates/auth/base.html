@@ -37,12 +37,7 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='/assets/css/demo.css') }}" />
 
     <link rel="stylesheet" href="{{ url_for('static',filename='/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-
-    {% if page=="misc" %}
-        <link rel="stylesheet" href="{{ url_for('static',filename='/assets/vendor/css/pages/page-misc.css') }}" />
-    {% elif page=="auth" %}
-        <link rel="stylesheet" href="{{ url_for('static',filename='/assets/vendor/css/pages/page-auth.css') }}" />
-    {% endif %}
+      <link rel="stylesheet" href="{{ url_for('static',filename='/assets/vendor/css/pages/page-auth.css') }}" />
 
     <script src="{{ url_for('static',filename='/assets/vendor/js/helpers.js') }}"></script>
 
