@@ -16,7 +16,7 @@ This Application has been developed to help the customer in processing their com
 
 ## PROBLEM STATEMENTS :
 
-   - [PROBLEM STATEMENTS](https://github.com/IBM-EPBL/IBM-Project-810-1658323900/tree/main/Project%20Designing%20and%20Planning/Design%20Phase%201/Proposed%20Solution)
+   - [PROBLEM STATEMENTS](https://github.com/IBM-EPBL/IBM-Project-810-1658323900/tree/main/Project%20Designing%20and%20Planning/Design%20Phase%201/Problem%20Solution%20Fit)
 
 ## PROPOSED SOLUTION :
 
