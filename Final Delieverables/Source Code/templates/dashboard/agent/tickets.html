@@ -1,0 +1,80 @@
+{% extends 'dashboard/agent/base.html' %}
+
+
+{% block content %}
+
+    <h4 class="col mb-5">Tickets</h4>
+
+    {% if tickets %}
+    <div class="card">
+
+        <div class="table-responsive text-nowrap" style="min-height: 500px">
+          <table id="tickets" class="table table-hover my-2">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Issue</th>
+                <th>Created On</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-1">
+                {% for ticket in tickets.values() %}
+                    <tr>
+                        <td>{{ ticket['description'] }}</td>
+                        <td>{{ ticket['issue'] }}</td>
+                        <td>{{ ticket['created'] }}</td>
+                        <td>
+                            <a href="/agent/ticket/{{ ticket['id'] }}/"><button type="button" class="btn btn-outline-info btn-sm">View</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+    {% for ticket in tickets.values() %}
+        <div class="modal fade" id="ticket-{{ ticket['id'] }}" data-bs-backdrop="static" tabindex="-1">
+      <div class="modal-dialog">
+        <form class="modal-content" method="post" action="/user/tickets/update/{{ ticket['id'] }}/">
+          <div class="modal-header">
+            <h5 class="modal-title" id="create-ticket-title">Edit Ticket</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col mb-3">
+                <label for="ticket-description" class="form-label">Short Description</label>
+                <input type="text" name="ticket-description" id="ticket-description" class="form-control" placeholder="Enter a short description" value="{{ ticket['description'] }}"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col mb-3">
+                <label for="ticket-issue" class="form-label">Issue</label>
+                <textarea type="text" name="ticket-issue" id="ticket-issue" class="form-control" placeholder="Describe your issue">{{ ticket['issue'] }}</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+        <p class="text-center my-lg-5">No Tickets</p>
+    {% endif %}
+{#    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/datatables.min.js"></script>#}
+    <script>
+        function check_form() {
+            description = document.getElementById("ticket-description").value;
+            issue = document.getElementById("ticket-issue").value;
+            return description.length > 0 && issue.length > 0;
+        }
+    </script>
+
+{% endblock %}

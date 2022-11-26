@@ -1,0 +1,70 @@
+{% extends 'dashboard/admin/base.html' %}
+
+{% block content %}
+<h4 class="col mb-5">Tickets / Ticket Detail</h4>
+
+<div class="card">
+
+        <div class="table-responsive text-nowrap">
+          <table id="tickets" class="table table-borderless">
+            <tbody class="table-border-bottom-0">
+                <tr>
+                    <td width="100">Ticket Id</td>
+                    <td>: {{ ticket[0]['id']}}</td>
+                </tr>
+                <tr>
+                    <td>Short Description</td>
+                    <td>: {{ ticket[0]['description']}}</td>
+                </tr>
+                <tr>
+                    <td>Detailed Issue</td>
+                    <td>: {{ ticket[0]['issue']}}</td>
+                </tr>
+                <tr>
+                    <td>Raised By</td>
+                    <td>: {{ ticket[0]['user'][1]}}</td>
+                </tr>
+                <tr>
+                    <td>Agent</td>
+                    <td>:
+                        {% if(ticket[0]['agent'] == 0) %}
+                            Unassigned
+                            <button class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Assign</button>
+                        {% else %}
+                            {{ ticket[0]['agent'][1]}}
+                            <button class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Re Assign</button>
+                        {% endif %}
+                        <ul class="dropdown-menu text-xs">
+                            {% for key, value in agents.items() %}
+                                <li><a class="dropdown-item" href="/tickets/set-agent/{{ ticket[0]['id'] }}/{{ key }}/">{{ value["name"] }} <span class="badge rounded-pill bg-danger">{{ value["pending"] }}</span></a></li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td>: <span class="badge {{ ticket[0]['css']}}">{{ ticket[0]['status']}}</span>
+                        <button class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Change</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/tickets/set-status/{{ ticket[0]['id'] }}/open/">Open</a></li>
+                            <li><a class="dropdown-item" href="/tickets/set-status/{{ ticket[0]['id'] }}/pending/">Pending</a></li>
+                            <li><a class="dropdown-item" href="/tickets/set-status/{{ ticket[0]['id'] }}/on-hold/">On Hold</a></li>
+                            <li><a class="dropdown-item" href="/tickets/set-status/{{ ticket[0]['id'] }}/solved/">Solved</a></li>
+                            <li><a class="dropdown-item" href="/tickets/set-status/{{ ticket[0]['id'] }}/closed/">Closed</a></li>
+                      </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Created</td>
+                    <td>: {{ ticket[0]['created']}}</td>
+                </tr>
+                <tr>
+{#                    <td></td>#}
+                    <td><a href="/user/tickets/delete/{{ ticket[0]['id']}}/"><button class="btn btn-primary mt-2">Delete</button></a></td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+</div>
+
+{% endblock %}

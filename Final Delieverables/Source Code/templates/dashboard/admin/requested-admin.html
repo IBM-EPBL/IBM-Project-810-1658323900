@@ -1,0 +1,65 @@
+{% extends "dashboard/admin/base.html" %}
+
+{% block content %}
+    <h4 class="col mb-5">Admins / Requests</h4>
+    {% if success %}
+    <div class="alert alert-primary alert-dismissible" role="alert">
+        {{ success }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% if admins %}
+    <div class="card">
+        <div class="table-responsive text-nowrap">
+          <table id="admins" class="table table-hover table-striped text-center">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>More</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-1">
+                {% for admin in admins.values() %}
+                    <tr>
+                        <td>{{ admin["name"] }}</td>
+                        <td>{{ admin["email"] }}</td>
+                        <td>
+                            <a href="/requests/admin/accept/{{ admin["id"] }}/">
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-outline-success text-nowrap"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-offset="0,14"
+                                    data-bs-placement="top"
+                                    data-bs-html="true"
+                                    title="Accept"
+                                >
+                                    <i class="bx bx-check"></i>
+                                </button>
+                            </a>
+                            <a href="/requests/admin/reject/{{ admin["id"] }}/">
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-outline-warning text-nowrap"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-offset="0,14"
+                                    data-bs-placement="top"
+                                    data-bs-html="true"
+                                    title="Reject"
+                                >
+                                    <i class="bx bx-x"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+    </div>
+    {% else %}
+        <p class="text-center my-lg-5">No Admin Requests</p>
+    {% endif %}
+{% endblock %}
